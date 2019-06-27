@@ -1,0 +1,576 @@
+﻿<Window x:Class="MTconnectLive.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MTconnectLive"
+        mc:Ignorable="d"
+        Title="MachineLive" Height="500" Width="600">
+
+
+    <Border Padding="10"  BorderBrush="{StaticResource Border}" BorderThickness="1,1,1,1">
+
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- The first Device -->
+                <Border Grid.Row="0"  BorderBrush="{StaticResource Border}" BorderThickness="1,1,1,1">
+                    
+
+                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="3*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="2*"/>
+
+                                </Grid.RowDefinitions>
+
+                                <!-- Device information -->
+                                <Border Grid.Row="0" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1" >
+                                    <StackPanel Grid.Row="0">
+                                        <TextBlock>
+                                            <Run Text="Device : " FontWeight="Bold"/>
+                                            <Run Text="GFAgie01" FontWeight="Bold"/>
+                                        </TextBlock>
+                                        <TextBlock Text="Model: HPM600U " FontWeight="Bold" Margin="0 2" />
+                                        <TextBlock Text="Manufacturer: Agie Charmilles" FontWeight="Bold" Margin="0 2"  />
+                                        <TextBlock Text="Betreiber:(SMS) Test Bed" FontWeight="Bold" Margin="0 2"  />
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Device Availibility -->
+                                <Border Grid.Row="1" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1">
+                                    <StackPanel Grid.Row="1">
+                                        <TextBlock>
+                                            <Run Text=" Status : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Events[0].CDATA}" FontWeight="Bold"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+
+
+                                <StackPanel Grid.Row="2">
+                                    <!--Availability-->
+                                    <Border Grid.Column="0" BorderBrush="{StaticResource Border}" BorderThickness="1,1,1,1">
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="1"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!--on-->
+                                            <Border>
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Path=_current.DeviceStreams[0].Events[0].CDATA}" Value="AVAILABLE">
+                                                                <Setter Property="Background" Value="{StaticResource StatusGreen}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <Grid>
+                                                    <Grid.Style>
+                                                        <Style TargetType="Grid">
+                                                            <Setter Property="OpacityMask" Value="{StaticResource On_Large_IMG}" />
+                                                            <Setter Property="Background" Value="{StaticResource Disabled_Text}"/>
+                                                            <Setter Property="Height" Value="40"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=_current.DeviceStreams[0].Events[0].CDATA}" Value="AVAILABLE">
+                                                                    <Setter Property="Background" Value="White"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Grid.Style>
+                                                </Grid>
+
+                                            </Border>
+
+                                            <Rectangle Grid.Column="1" Fill="{StaticResource Border}" Width="1"/>
+
+                                            <!--Off-->
+                                            <Border Grid.Column="2">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Path=_current.DeviceStreams[0].Events[0].CDATA}" Value="UNAVAILABLE">
+                                                                <Setter Property="Background" Value="{StaticResource StatusRed}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <Grid>
+                                                    <Grid.Style>
+                                                        <Style TargetType="Grid">
+                                                            <Setter Property="OpacityMask" Value="{StaticResource Off_Large_IMG}" />
+                                                            <Setter Property="Background" Value="{StaticResource Disabled_Text}"/>
+                                                            <Setter Property="Height" Value="40"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=_current.DeviceStreams[0].Events[0].CDATA}" Value="UNAVAILABLE">
+                                                                    <Setter Property="Background" Value="White"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Grid.Style>
+                                                </Grid>
+
+                                            </Border>
+
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+
+
+                            <!--Current Data-->
+                            <Grid Grid.Column="1">
+                                <!-- Device: Axes Current data -->
+                                <Border Grid.Row="0" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1" >
+                                    <StackPanel >
+                                        <TextBlock Text="Axes Current data" FontWeight="Bold"/>
+                                        <TextBlock Margin="0 5">
+                                            <Run Text=" Rotary A : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Samples[0].CDATA}" FontWeight="Bold"/>
+                                        </TextBlock >
+                                        <TextBlock>
+                                            <Run Text=" Rotary C : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Samples[1].CDATA}" FontWeight="Bold"/>
+                                        </TextBlock>
+                                        <TextBlock Margin="0 5">
+                                            <Run Text=" Linear X : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Samples[2].CDATA}" FontWeight="Bold"/>
+                                        </TextBlock>
+                                        <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Y : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Samples[3].CDATA}" FontWeight="Bold"/>
+                                        </TextBlock>
+                                        <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Z : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Samples[4].CDATA}" FontWeight="Bold"/>
+                                        </TextBlock >
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <!--Current Data-->
+                            <Grid Grid.Column="2">
+                                <!-- Device: Axes Maximum Current data -->
+                                <Border Grid.Row="0" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1" >
+                                    <StackPanel >
+                                        <TextBlock Text="Axes Maximum data" FontWeight="Bold"/>
+                                        <TextBlock Margin="0 5">
+                                            <Run Text=" Rotary A : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxRotaryA[0]}" FontWeight="Bold"/>
+                                        </TextBlock >
+                                        <TextBlock>
+                                            <Run Text=" Rotary C : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxRotaryC[0]}" FontWeight="Bold"/>
+                                        </TextBlock>
+                                        <TextBlock Margin="0 5">
+                                            <Run Text=" Linear X : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxLinearX[0]}" FontWeight="Bold"/>
+                                        </TextBlock>
+                                        <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Y : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxLinearY[0]}" FontWeight="Bold"/>
+                                        </TextBlock>
+                                        <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Z : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxLinearZ[0]}" FontWeight="Bold"/>
+                                        </TextBlock >
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Grid>
+
+                </Border>
+
+                <Border Grid.Row="1"  BorderBrush="{StaticResource Border}" BorderThickness="1,1,1,1">
+
+
+                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
+
+                        </Grid.RowDefinitions>
+
+                        <!-- Device information -->
+                        <Border Grid.Row="0" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1" >
+                            <StackPanel Grid.Row="0">
+                                <TextBlock>
+                                            <Run Text="Device : " FontWeight="Bold"/>
+                                            <Run Text="GFAgie02" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Text="Model: HPM600U " FontWeight="Bold" Margin="0 2" />
+                                <TextBlock Text="Manufacturer: Agie Charmilles" FontWeight="Bold" Margin="0 2"  />
+                                <TextBlock Text="Betreiber:(SMS) Test Bed" FontWeight="Bold" Margin="0 2"  />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Device Availibility -->
+                        <Border Grid.Row="1" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1">
+                            <StackPanel Grid.Row="1">
+                                <TextBlock>
+                                            <Run Text=" Status : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _Avail[0]}" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+
+                        <StackPanel Grid.Row="2">
+                            <!--Availability-->
+                            <Border Grid.Column="0" BorderBrush="{StaticResource Border}" BorderThickness="1,1,1,1">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="1"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--on-->
+                                    <Border>
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding _Avail[0]}" Value="AVAILABLE">
+                                                        <Setter Property="Background" Value="{StaticResource StatusGreen}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+
+                                        <Grid>
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="OpacityMask" Value="{StaticResource On_Large_IMG}" />
+                                                    <Setter Property="Background" Value="{StaticResource Disabled_Text}"/>
+                                                    <Setter Property="Height" Value="40"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding _Avail[0]}" Value="AVAILABLE">
+                                                            <Setter Property="Background" Value="White"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                        </Grid>
+
+                                    </Border>
+
+                                    <Rectangle Grid.Column="1" Fill="{StaticResource Border}" Width="1"/>
+
+                                    <!--Off-->
+                                    <Border Grid.Column="2">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding _Avail[0]}" Value="UNAVAILABLE">
+                                                        <Setter Property="Background" Value="{StaticResource StatusRed}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+
+                                        <Grid>
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="OpacityMask" Value="{StaticResource Off_Large_IMG}" />
+                                                    <Setter Property="Background" Value="{StaticResource Disabled_Text}"/>
+                                                    <Setter Property="Height" Value="40"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding _Avail[0]}" Value="UNAVAILABLE">
+                                                            <Setter Property="Background" Value="White"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                        </Grid>
+
+                                    </Border>
+
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+
+
+                    <!--Current Data-->
+                    <Grid Grid.Column="1">
+                        <!-- Device: Axes Current data -->
+                        <Border Grid.Row="0" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1" >
+                            <StackPanel >
+                                <TextBlock Text="Axes Current data" FontWeight="Bold"/>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Rotary A : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _RotaryA[1]}" FontWeight="Bold"/>
+                                </TextBlock >
+                                <TextBlock>
+                                            <Run Text=" Rotary C : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _RotaryC[1]}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear X : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _LinearX[1]}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Y : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _LinearY[1]}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Z : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _LinearZ[1]}" FontWeight="Bold"/>
+                                </TextBlock >
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!--Current Data-->
+                    <Grid Grid.Column="2">
+                        <!-- Device: Axes Maximum Current data -->
+                        <Border Grid.Row="0" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1" >
+                            <StackPanel >
+                                <TextBlock Text="Axes Maximum data" FontWeight="Bold"/>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Rotary A : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxRotaryA[1]}" FontWeight="Bold"/>
+                                </TextBlock >
+                                <TextBlock>
+                                            <Run Text=" Rotary C : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxRotaryC[1]}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear X : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxLinearX[1]}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Y : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxLinearY[1]}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Z : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxLinearZ[1]}" FontWeight="Bold"/>
+                                </TextBlock >
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+
+            </Border>
+                <Border Grid.Row="2"  BorderBrush="{StaticResource Border}" BorderThickness="1,1,1,1">
+
+
+                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
+
+                        </Grid.RowDefinitions>
+
+                        <!-- Device information -->
+                        <Border Grid.Row="0" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1" >
+                            <StackPanel Grid.Row="0">
+                                <TextBlock>
+                                            <Run Text="Device : " FontWeight="Bold"/>
+                                            <Run Text="GFAgie03" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Text="Model: HPM600U " FontWeight="Bold" Margin="0 2" />
+                                <TextBlock Text="Manufacturer: Agie Charmilles" FontWeight="Bold" Margin="0 2"  />
+                                <TextBlock Text="Betreiber:(SMS) Test Bed" FontWeight="Bold" Margin="0 2"  />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Device Availibility -->
+                        <Border Grid.Row="1" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1">
+                            <StackPanel Grid.Row="1">
+                                <TextBlock>
+                                            <Run Text=" Status : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Events[0].CDATA}" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+
+                        <StackPanel Grid.Row="2">
+                            <!--Availability-->
+                            <Border Grid.Column="0" BorderBrush="{StaticResource Border}" BorderThickness="1,1,1,1">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="1"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--on-->
+                                    <Border>
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=_current.DeviceStreams[0].Events[0].CDATA}" Value="AVAILABLE">
+                                                        <Setter Property="Background" Value="{StaticResource StatusGreen}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+
+                                        <Grid>
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="OpacityMask" Value="{StaticResource On_Large_IMG}" />
+                                                    <Setter Property="Background" Value="{StaticResource Disabled_Text}"/>
+                                                    <Setter Property="Height" Value="40"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=_current.DeviceStreams[0].Events[0].CDATA}" Value="AVAILABLE">
+                                                            <Setter Property="Background" Value="White"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                        </Grid>
+
+                                    </Border>
+
+                                    <Rectangle Grid.Column="1" Fill="{StaticResource Border}" Width="1"/>
+
+                                    <!--Off-->
+                                    <Border Grid.Column="2">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=_current.DeviceStreams[0].Events[0].CDATA}" Value="UNAVAILABLE">
+                                                        <Setter Property="Background" Value="{StaticResource StatusRed}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+
+                                        <Grid>
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="OpacityMask" Value="{StaticResource Off_Large_IMG}" />
+                                                    <Setter Property="Background" Value="{StaticResource Disabled_Text}"/>
+                                                    <Setter Property="Height" Value="40"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=_current.DeviceStreams[0].Events[0].CDATA}" Value="UNAVAILABLE">
+                                                            <Setter Property="Background" Value="White"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                        </Grid>
+
+                                    </Border>
+
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+
+
+                    <!--Current Data-->
+                    <Grid Grid.Column="1">
+                        <!-- Device: Axes Current data -->
+                        <Border Grid.Row="0" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1" >
+                            <StackPanel >
+                                <TextBlock Text="Axes Current data" FontWeight="Bold"/>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Rotary A : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Samples[0].CDATA}" FontWeight="Bold"/>
+                                </TextBlock >
+                                <TextBlock>
+                                            <Run Text=" Rotary C : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Samples[1].CDATA}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear X : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Samples[2].CDATA}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Y : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Samples[3].CDATA}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Z : " FontWeight="Bold"/>
+                                            <Run Text="{Binding Path=_current.DeviceStreams[0].Samples[4].CDATA}" FontWeight="Bold"/>
+                                </TextBlock >
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!--Current Data-->
+                    <Grid Grid.Column="2">
+                        <!-- Device: Axes Maximum Current data -->
+                        <Border Grid.Row="0" BorderBrush="{StaticResource Border}" BorderThickness="0,0,1,1" >
+                            <StackPanel >
+                                <TextBlock Text="Axes Maximum data" FontWeight="Bold"/>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Rotary A : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxRotaryA[2]}" FontWeight="Bold"/>
+                                </TextBlock >
+                                <TextBlock>
+                                            <Run Text=" Rotary C : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxRotaryC[2]}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear X : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxLinearX[2]}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Y : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxLinearY[2]}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Margin="0 5">
+                                            <Run Text=" Linear Z : " FontWeight="Bold"/>
+                                            <Run Text="{Binding _maxLinearZ[0]}" FontWeight="Bold"/>
+                                </TextBlock >
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+
+            </Border>
+
+
+        </Grid>
+
+    </Border>
+           
+       
+    
+    
+
+</Window>
